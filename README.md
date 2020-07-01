@@ -4,4 +4,11 @@ Note: To view the equations correctly, download [MathJax](https://chrome.google.
 
 ## Dynamic Programming
 # Formulation
-State : $ x_t $, Action : $ u_t $, Dynamic of the system $x_{t+1} = f_t(x_t, u_t) $
+we have
+&emsp; 1) State : $ x_t $
+
+&emsp; 2) Action : $ u_t $
+
+&emsp; 3) Dynamic of the system $x_{t+1} = f_t(x_t, u_t) $
+
+
