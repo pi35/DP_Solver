@@ -17,3 +17,8 @@ Consider a finite horizon problem with finite time $T$. We have the following no
 # Bellman's Principle of Optimality
 
 &emsp; Policy $\bar{\gamma}^* $ is optimal iff the policy is optimal for the truncated problem from time $t$ to $T$. This holds for all $ t = 0, 1, ..., T - 1 $.
+
+# DP Iteration
+For every time step, we compute the following
+
+&emsp; 1) $\gamma_t^* (x_t) = \argmin_{u_t}[]$
