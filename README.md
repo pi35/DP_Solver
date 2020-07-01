@@ -16,4 +16,4 @@ Consider a finite horizon problem with finite time $T$. We have the following no
 
 # Bellman's Principle of Optimality
 
-&emsp; $\bar{\gamma}^* $ is optimal iff $(\gamma_t^*, ..., \gamma_{T-1}^*)$ is optimal for the truncated problem. This holds for all $t = 0, 1, ..., T - 1$.
+&emsp; $\bar{\gamma}^* $ is optimal iff $ (\gamma_t^*, ..., \gamma_{T-1}^*) $ is optimal for the truncated problem. This holds for all $ t = 0, 1, ..., T - 1 $.
