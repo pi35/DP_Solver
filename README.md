@@ -4,12 +4,12 @@ Note: To view the equations correctly, download [MathJax](https://chrome.google.
 
 ## Dynamic Programming
 # Formulation
-We have the following notations
+Consider a finite horizon problem with time $T$. We have the following notations
 
-&emsp; 1) State : $ x_t $
+&emsp; 1) State $ x_t $
 
-&emsp; 2) Action : $ u_t $
+&emsp; 2) Action $ u_t $
 
 &emsp; 3) Dynamic of the system $x_{t+1} = f_t(x_t, u_t) $
 
-&emsp; 4) Strategy(Policy) $\gamma_t : \mathbb{X}_t \to U_t$
+&emsp; 4) Strategy(Policy) $\gamma_t : \mathbb{X}_t \to U_t$, and $\gamma = (\gamma_1, \gamma_2, ..., \gamma_T)$
