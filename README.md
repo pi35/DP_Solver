@@ -21,4 +21,4 @@ Consider a finite horizon problem with finite time $T$. We have the following no
 # DP Iteration
 For every time step, we compute the following
 
-&emsp; 1) $\gamma_t^* (x_t) = \argmin_{u_t}[]$
+&emsp; 1) $\gamma_t^* (x_t) = argmin_{u_t}[]$
