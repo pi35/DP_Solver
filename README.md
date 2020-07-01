@@ -2,7 +2,8 @@
 
 Note: To view the equations correctly, download [MathJax](https://chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima?hl=en)
 
-## Dynamic Programming
+# Dynamic Programming (DP)
+DP yields an optimal closed loop policy (A policy that makes action with considering the state). Also, DP yields a strongly time-consistent policy, i.e. the policy $(\gamma_t, ..., \gamma_{T-1})$ is optimal no matter what happens in the past.
 # Formulation
 Consider a finite horizon problem with finite time $T$. We have the following notations
 
