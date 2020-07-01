@@ -24,3 +24,5 @@ For every time step, we compute the following
 &emsp; 1) $\gamma_t^* (x_t) = argmin_{u_t}[g_t(x_t, u_t) + V_{t+1}(f_t(x_t, u_t))]$
 
 &emsp; 2) $V_t(x_t) = min_{u_t}[g_t(x_t, u_t) + V_{t+1}(f_t(x_t, u_t))]$
+
+Starting with $V_T(x_T) = g_T(x_T)$, we compute the policy and value from time $t=T-1$ to $t=0$.
