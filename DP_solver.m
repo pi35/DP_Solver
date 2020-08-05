@@ -16,6 +16,8 @@ classdef DP_solver
         gamma
         t
         Lc_T
+        L_epsilon_lambda
+        L_epsilon_mu
         T
         num_eq_constraints
         num_ineq_constraints
@@ -36,7 +38,7 @@ classdef DP_solver
     end
     
     methods
-        function obj = DP_solver(X1_, X2_, X3_, X4_, X5_, T_, Lc_T_, f_, J_t_, J_T_, c_, num_eq_con, num_ineq_con, h_, h_N_, g_, g_N_, nonlcon_, lb_, ub_)
+        function obj = DP_solver(X1_, X2_, X3_, X4_, X5_, T_, Lc_T_, L_epsilon_lambda_, L_epsilon_mu_, f_, J_t_, J_T_, c_, num_eq_con, num_ineq_con, h_, h_N_, g_, g_N_, nonlcon_, lb_, ub_)
             % Detailed explanation goes here
             obj.X1 = X1_;
             obj.X2 = X2_;
@@ -45,6 +47,8 @@ classdef DP_solver
             obj.X5 = X5_;
             obj.T = T_;
             obj.Lc_T = Lc_T_;
+            obj.L_epsilon_lambda = L_epsilon_lambda_;
+            obj.L_epsilon_mu = L_epsilon_mu_;
             obj.f = f_;
             obj.J_t = J_t_;
             obj.J_T = J_T_;
@@ -187,25 +191,34 @@ classdef DP_solver
             u_star = (self.ub + self.lb) / 2;
             % We need h and g for updating lambda and mu
             % Initialize lambda and mu 
-            lambda = ones(self.num_eq_constraints, self.Lc_T);
-            mu = ones(self.num_ineq_constraints, self.Lc_T);
+            lambda_prev = ones(self.num_eq_constraints, 1);
+            lambda_new = ones(self.num_eq_constraints, 1);
+            mu_prev = ones(self.num_ineq_constraints, 1);
+            mu_new = ones(self.num_ineq_constraints, 1);
             c_tmp = self.c; % Penalty coeeficient in augmented Lagrangian method
             [h_tmp, g_tmp] = get_constraints(self);
             % Iterate Lc_T timesteps, in each time step, increase c.
             for L_idx = 1:self.Lc_T
                 [u_star, J_val, ~, ~, ~] = ...
-                    fmincon(@(u) L_c(x, u, lambda(:, L_idx), mu(:, L_idx), c_tmp, self), u_star, [], [], [], [], self.lb, self.ub, self.nonlcon, options);
+                    fmincon(@(u) L_c(x, u, lambda_prev, mu_prev, c_tmp, self), u_star, [], [], [], [], self.lb, self.ub, self.nonlcon, options);
+                % If L_multipliers converge, break out the loop
+                if((L_idx > 1) && (norm(lambda_new - lambda_prev, 2) <= self.L_epsilon_lambda) && (norm(mu_new - mu_prev, 2) <= self.L_epsilon_mu))
+                    break
+                end
+                lambda_prev = lambda_new;
+                mu_prev = mu_new;
                 % Update L-multipliers
-                lambda(:, L_idx + 1) = lambda(:, L_idx) + c_tmp * h_tmp(x, u_star);
-                mu(:, L_idx + 1) = max(0, mu(:, L_idx) + c_tmp * g_tmp(x, u_star));
+                lambda_new = lambda_prev + c_tmp * h_tmp(x, u_star);
+                mu_new = max(0, mu_prev + c_tmp * g_tmp(x, u_star));
                 % increase c
                 c_tmp = c_tmp * 1.5;
             end
+            fprintf("L_multipliers converges in %d iterations\n", L_idx)
             % Return the variables
             gamma_star = u_star;
             J_star = J_val;
-            L_eq = lambda(:, end);
-            L_ineq = mu(:, end);
+            L_eq = lambda_new;
+            L_ineq = mu_new;
         end
         
         function [h, g] = get_constraints(self)
@@ -217,11 +230,13 @@ classdef DP_solver
                g = self.g;
            end
         end
+        
         function Lc = L_c(x, u, lambda, mu, c, self)
             % Refer to Nonlinear Programming book (2nd version)
             % h(x) = 0, g(x) <= 0
-            Lc = bellman_eqn(x, u, self) + lambda'*self.h(x,u) + c/2*self.h(x,u)'*self.h(x,u)...
-                + 1/(2*c) * (ones(1,self.num_ineq_constraints)*(max(0,mu+c*self.g(x,u)).*max(0,mu+c*self.g(x,u)) - mu.*mu));
+            [h_tmp, g_tmp] = get_constraints(self);
+            Lc = bellman_eqn(x, u, self) + lambda'*h_tmp(x,u) + c/2*h_tmp(x,u)'*h_tmp(x,u)...
+                + 1/(2*c) * (ones(1,self.num_ineq_constraints)*(max(0,mu+c*g_tmp(x,u)).*max(0,mu+c*g_tmp(x,u)) - mu.*mu));
         end
         
         function bellman_eqn = bellman_eqn(x, u, self)
