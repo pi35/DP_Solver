@@ -4,7 +4,7 @@ Note: To view the equations correctly, download [MathJax](https://chrome.google.
 
 # Dynamic Programming (DP)
 DP yields an optimal closed loop policy (A policy that makes action with considering the state). Also, DP yields a strongly time-consistent policy, i.e. the policy $(\gamma_t, ..., \gamma_{T-1})$ is optimal no matter what happens in the past.
-# Formulation
+
 Consider a finite horizon problem with finite time $T$. We have the following notations
 
 &emsp; 1) State $ x_t $
@@ -15,11 +15,8 @@ Consider a finite horizon problem with finite time $T$. We have the following no
 
 &emsp; 4) Strategy(Policy) $\gamma_t : \mathbb{X}_t \to U_t$, and $\gamma = (\gamma_1, \gamma_2, ..., \gamma_T)$
 
-# Bellman's Principle of Optimality
-
 &emsp; Policy $\bar{\gamma}^* $ is optimal iff the policy is optimal for the truncated problem from time $t$ to $T$. This holds for all $ t = 0, 1, ..., T - 1 $.
 
-# DP Iteration
 For every time step, we compute the following
 
 &emsp; 1) $\gamma_t^* (x_t) = argmin_{u_t}[g_t(x_t, u_t) + V_{t+1}(f_t(x_t, u_t))]$
