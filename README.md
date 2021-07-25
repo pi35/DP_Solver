@@ -1,7 +1,7 @@
 # DP Solver
 Note: To view the equations correctly, download [MathJax](https://chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima?hl=en)
 
-This project is a solver to general dynamic programming problems. The solver takes a dynamic problem and outputs the value, optimal action and lagrangian for each state at each timestep. The solver supports at most 5-dimensional state problems. 
+This project is a solver to general dynamic programming problems. The solver takes a dynamic problem and outputs the value, optimal action and lagrangian for each state at each timestep. This project has a MATLAB version and a Python version.
 
 ## Using the solver
 [test.m](test.m) shows the way of using the solver. For some specific dynamic problems, the user needs to change the state description, lagrangian description and system description.
