@@ -1,12 +1,17 @@
 # DP Solver
 Note: To view the equations correctly, download [MathJax](https://chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima?hl=en)
 
-This project is a solver to general dynamic programming problems. The solver takes a dynamic problem and outputs the value, optimal action and lagrangian for each state at each timestep. This project has a MATLAB version and a Python version.
+This project is a solver to general dynamic programming problems. The solver takes a dynamic problem and outputs the value, optimal action and lagrangian for each state at each timestep. The solver uses interpolation to approximate the value functions. This project has a MATLAB version and a Python version.
 
 ## Using the solver
+
+### MATLAB version
 [test.m](test.m) shows the way of using the solver. For some specific dynamic problems, the user needs to change the state description, lagrangian description and system description.
 
-## Dynamic Programming (DP)
+### Python version
+Notice that scipy version need to be no earlier than 1.7.0.
+
+## Algorithm
 DP yields an optimal closed loop policy (A policy that makes action with considering the state). Also, DP yields a strongly time-consistent policy, i.e. the policy $(\gamma_t, ..., \gamma_{T-1})$ is optimal no matter what happens in the past.
 
 Consider a finite horizon problem with finite time $T$. We have the following notations
